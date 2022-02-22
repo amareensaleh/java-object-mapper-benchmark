@@ -1,26 +1,22 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-import optional4j.annotation.OptionalReturn;
-import optional4j.annotation.ValueType;
+import java.util.Optional;
 
-@ValueType
 public class Customer {
     String name;
     Address shippingAddress;
     Address billingAddress;
 
-    @OptionalReturn
-    public Address getShippingAddress() {
-        return shippingAddress;
+    public Optional<Address> getShippingAddress() {
+        return Optional.ofNullable(shippingAddress);
     }
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 
-    @OptionalReturn
-    public Address getBillingAddress() {
-        return billingAddress;
+    public Optional<Address> getBillingAddress() {
+        return Optional.ofNullable(billingAddress);
     }
 
     public void setBillingAddress(Address billingAddress) {

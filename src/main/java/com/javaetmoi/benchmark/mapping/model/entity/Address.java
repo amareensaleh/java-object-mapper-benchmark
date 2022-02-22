@@ -1,8 +1,5 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-import optional4j.annotation.ValueType;
-
-@ValueType
 public class Address {
     String street;
     String city;

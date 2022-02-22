@@ -3,13 +3,11 @@ package com.javaetmoi.benchmark.mapping.mapper.manual;
 import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
 import com.javaetmoi.benchmark.mapping.model.dto.ProductDTO;
-import com.javaetmoi.benchmark.mapping.model.entity.Address;
 import com.javaetmoi.benchmark.mapping.model.entity.Customer;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
-import optional4j.spec.Optional;
 
 
 public final class ManualMapper implements OrderMapper {

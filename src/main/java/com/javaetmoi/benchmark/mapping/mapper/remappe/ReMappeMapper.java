@@ -10,10 +10,6 @@ import com.javaetmoi.benchmark.mapping.model.entity.Product;
 import com.remondis.remap.Mapper;
 import com.remondis.remap.Mapping;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-
 
 public final class ReMappeMapper implements OrderMapper {
 

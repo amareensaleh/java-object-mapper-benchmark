@@ -9,7 +9,7 @@ import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import optional4j.spec.Optional;
+import java.util.Optional;
 
 /**
  * Using custom BoundMapperFacade with no object graph cycles.
