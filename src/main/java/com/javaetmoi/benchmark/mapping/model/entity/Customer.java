@@ -1,10 +1,15 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
+import optional4j.annotation.OptionalReturn;
+import optional4j.annotation.ValueType;
+
+@ValueType
 public class Customer {
     String name;
     Address shippingAddress;
     Address billingAddress;
 
+    @OptionalReturn
     public Address getShippingAddress() {
         return shippingAddress;
     }
@@ -13,6 +18,7 @@ public class Customer {
         this.shippingAddress = shippingAddress;
     }
 
+    @OptionalReturn
     public Address getBillingAddress() {
         return billingAddress;
     }

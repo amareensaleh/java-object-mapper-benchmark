@@ -1,5 +1,8 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
+import optional4j.annotation.ValueType;
+
+@ValueType
 public class Product {
     private String name;
 

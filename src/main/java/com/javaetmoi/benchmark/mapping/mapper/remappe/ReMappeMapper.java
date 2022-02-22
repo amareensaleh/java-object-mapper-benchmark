@@ -25,31 +25,11 @@ public final class ReMappeMapper implements OrderMapper {
     private final Mapper<Order, OrderDTO> mapperToDto = Mapping
         .from(Order.class)
         .to(OrderDTO.class)
-        .replace(Order::getCustomer, OrderDTO::getCustomerName).withSkipWhenNull(customer -> customer.getName())
-        .replace(Order::getCustomer, OrderDTO::getBillingStreetAddress).withSkipWhenNull(customer -> {
-            Address billingAddress = customer.getBillingAddress();
-            return Objects.nonNull(billingAddress)
-                ? billingAddress.getStreet()
-                : null;
-        })
-        .replace(Order::getCustomer, OrderDTO::getBillingCity).withSkipWhenNull(customer -> {
-            Address billingAddress = customer.getBillingAddress();
-            return Objects.nonNull(billingAddress)
-                ? billingAddress.getCity()
-                : null;
-        })
-        .replace(Order::getCustomer, OrderDTO::getShippingStreetAddress).withSkipWhenNull(customer -> {
-            Address shippingAddress = customer.getShippingAddress();
-            return Objects.nonNull(shippingAddress)
-                ? shippingAddress.getStreet()
-                : null;
-        })
-        .replace(Order::getCustomer, OrderDTO::getShippingCity).withSkipWhenNull(customer -> {
-            Address shippingAddress = customer.getShippingAddress();
-            return Objects.nonNull(shippingAddress)
-                ? shippingAddress.getCity()
-                : null;
-        })
+        .replace(Order::getCustomer, OrderDTO::getCustomerName).withSkipWhenNull(customer -> customer.map(Customer::getName).orElse(null))
+        .replace(Order::getCustomer, OrderDTO::getBillingStreetAddress).withSkipWhenNull(customer -> customer.flatMap(Customer::getBillingAddress).map(Address::getStreet).orElse(null))
+        .replace(Order::getCustomer, OrderDTO::getBillingCity).withSkipWhenNull(customer -> customer.flatMap(Customer::getBillingAddress).map(Address::getCity).orElse(null))
+        .replace(Order::getCustomer, OrderDTO::getShippingStreetAddress).withSkipWhenNull(customer -> customer.flatMap(Customer::getShippingAddress).map(Address::getStreet).orElse(null))
+        .replace(Order::getCustomer, OrderDTO::getShippingCity).withSkipWhenNull(customer -> customer.flatMap(Customer::getShippingAddress).map(Address::getCity).orElse(null))
         .useMapper(mapperToDtoProduct)
         .mapper();
 

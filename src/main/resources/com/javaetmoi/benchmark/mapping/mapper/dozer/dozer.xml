@@ -2,7 +2,7 @@
 <mappings xmlns="http://dozermapper.github.io/schema/bean-mapping"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping http://dozermapper.github.io/schema/bean-mapping.xsd">
-    <mapping stop-on-errors="true">
+    <mapping stop-on-errors="false">
         <class-a>com.javaetmoi.benchmark.mapping.model.entity.Order</class-a>
         <class-b>com.javaetmoi.benchmark.mapping.model.dto.OrderDTO</class-b>
         <field>

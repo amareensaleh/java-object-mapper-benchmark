@@ -3,14 +3,14 @@ package com.javaetmoi.benchmark;
 import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.mapper.bull.BullMapper;
 import com.javaetmoi.benchmark.mapping.mapper.datus.DatusMapper;
-import com.javaetmoi.benchmark.mapping.mapper.dozer.DozerMapper;
-import com.javaetmoi.benchmark.mapping.mapper.jmapper.JMapperMapper;
+//import com.javaetmoi.benchmark.mapping.mapper.dozer.DozerMapper;
+//import com.javaetmoi.benchmark.mapping.mapper.jmapper.JMapperMapper;
 import com.javaetmoi.benchmark.mapping.mapper.manual.ManualMapper;
 import com.javaetmoi.benchmark.mapping.mapper.mapstruct.MapStructMapper;
 import com.javaetmoi.benchmark.mapping.mapper.modelmapper.ModelMapper;
 import com.javaetmoi.benchmark.mapping.mapper.orika.OrikaMapper;
 import com.javaetmoi.benchmark.mapping.mapper.remappe.ReMappeMapper;
-import com.javaetmoi.benchmark.mapping.mapper.selma.SelmaMapper;
+//import com.javaetmoi.benchmark.mapping.mapper.selma.SelmaMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.OrderFactory;
@@ -37,7 +37,7 @@ public class MapperBenchmark {
     public void setup() {
         switch (type) {
             case "Dozer":
-                mapper = new DozerMapper();
+//                mapper = new DozerMapper();
                 break;
             case "Orika":
                 mapper = new OrikaMapper();
@@ -49,10 +49,10 @@ public class MapperBenchmark {
                 mapper = new MapStructMapper();
                 break;
             case "Selma":
-                mapper = new SelmaMapper();
+                //mapper = new SelmaMapper();
                 break;
             case "JMapper":
-                mapper = new JMapperMapper();
+                //mapper = new JMapperMapper();
                 break;
             case "Manual":
                 mapper = new ManualMapper();
