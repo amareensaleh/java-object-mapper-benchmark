@@ -191,50 +191,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>fr.inria.gforge.spoon</groupId>
-                <artifactId>spoon-maven-plugin</artifactId>
-                <version>3.4.2</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.petra.optional4j</groupId>
-                        <artifactId>optional4j-codegen</artifactId>
-                        <version>1.0.0-SNAPSHOT</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <phase>generate-sources</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <outputType>classes</outputType>
-                    <withImports>true</withImports>
-                    <noClasspath>true</noClasspath>
-                    <processors>
-                        <processor>optional4j.codegen.processor.ValueTypeProcessor</processor>
-                        <processor>optional4j.codegen.processor.OptionalReturnProcessor</processor>
-                        <processor>optional4j.codegen.processor.CollaboratorProcessor</processor>
-                        <processor>optional4j.codegen.processor.NullableProcessor</processor>
-                        <processor>optional4j.codegen.processor.NullSafeProcessor</processor>
-                        <processor>optional4j.codegen.processor.NullAssertProcessor</processor>
-                    </processors>
-                    <processorProperties>
-                        <processorProperty>
-                            <name>optional4j.codegen.processor.OptionalReturnProcessor</name>
-                            <properties>
-                                <property>
-                                    <name>mode</name>
-                                    <value>PESSIMISTIC</value>
-                                </property>
-                            </properties>
-                        </processorProperty>
-                    </processorProperties>
-                </configuration>
-            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>

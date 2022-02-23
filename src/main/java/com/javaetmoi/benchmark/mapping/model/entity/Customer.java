@@ -1,26 +1,25 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-import optional4j.annotation.OptionalReturn;
-import optional4j.annotation.ValueType;
 
-@ValueType
-public class Customer {
+import optional4j.spec.Absent;
+import optional4j.spec.Optional;
+import optional4j.spec.Present;
+
+public class Customer implements Present<Customer> {
     String name;
     Address shippingAddress;
     Address billingAddress;
 
-    @OptionalReturn
-    public Address getShippingAddress() {
-        return shippingAddress;
+    public Optional<Address> getShippingAddress() {
+        return shippingAddress != null ? shippingAddress: Absent.nothing();
     }
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 
-    @OptionalReturn
-    public Address getBillingAddress() {
-        return billingAddress;
+    public Optional<Address> getBillingAddress() {
+        return billingAddress != null ? billingAddress: Absent.nothing();
     }
 
     public void setBillingAddress(Address billingAddress) {

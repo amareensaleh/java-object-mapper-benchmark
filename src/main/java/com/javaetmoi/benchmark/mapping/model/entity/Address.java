@@ -1,9 +1,8 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-import optional4j.annotation.ValueType;
+import optional4j.spec.Present;
 
-@ValueType
-public class Address {
+public class Address implements Present<Address> {
     String street;
     String city;
 
