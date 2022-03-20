@@ -4,7 +4,6 @@ import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
 import com.javaetmoi.benchmark.mapping.model.dto.ProductDTO;
 import com.javaetmoi.benchmark.mapping.model.entity.Address;
-import com.javaetmoi.benchmark.mapping.model.entity.AlphaCode2;
 import com.javaetmoi.benchmark.mapping.model.entity.Country;
 import com.javaetmoi.benchmark.mapping.model.entity.Customer;
 import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
@@ -19,47 +18,37 @@ public final class ManualMapper implements OrderMapper {
 
     @Override
     public OrderDTO map(Order order) {
-        OrderDTO target = new OrderDTO();
 
-        order.getCustomer()
-                .ifPresent(customer -> target.setCustomerName(customer.getName()));
+        OrderDTO orderDTO = new OrderDTO();
 
-        order.getCustomer()
-                .flatMap(Customer::getBillingAddress)
-                .ifPresent(address -> {
-                    target.setBillingCity(address.getCity());
-                    target.setBillingStreetAddress(address.getStreet());
-                });
+        order.getCustomer().ifPresent(aCustomer -> {
 
-        order.getCustomer()
-                .flatMap(Customer::getShippingAddress)
-                .ifPresent(address -> {
-                    target.setShippingCity(address.getCity());
-                    target.setShippingStreetAddress(address.getStreet());
-                });
+            orderDTO.setCustomerName(aCustomer.getName());
+
+            aCustomer.getBillingAddress().ifPresent(address -> {
+                orderDTO.setBillingCity(address.getCity());
+                orderDTO.setBillingStreetAddress(address.getStreet());
+                address.getCountry().flatMap(Country::getIsoCode)
+                        .flatMap(IsoCode::getAlphaCode2)
+                        .ifPresent(alphaCode2 -> orderDTO.setBillingAlphaCode2(alphaCode2.getCode()));
+            });
+
+            aCustomer.getShippingAddress().ifPresent(address -> {
+                orderDTO.setShippingCity(address.getCity());
+                orderDTO.setShippingStreetAddress(address.getStreet());
+                address.getCountry().flatMap(Country::getIsoCode)
+                        .flatMap(IsoCode::getAlphaCode2)
+                        .ifPresent(alphaCode2 -> orderDTO.setShippingAlphaCode2(alphaCode2.getCode()));
+            });
+        });
 
         if (order.getProducts() != null) {
             List<ProductDTO> targetProducts = new ArrayList<ProductDTO>(order.getProducts().size());
             for (Product product : order.getProducts()) {
                 targetProducts.add(new ProductDTO(product.getName()));
             }
-            target.setProducts(targetProducts);
+            orderDTO.setProducts(targetProducts);
         }
-        return target;
+        return orderDTO;
     }
-
-    private String getAlphaCode2(Address address) {
-        Country country = address.getCountry();
-        if (country != null) {
-            IsoCode isoCode = country.getIsoCode();
-            if (isoCode != null) {
-                AlphaCode2 alphaCode2 = isoCode.getAlphaCode2();
-                if (alphaCode2 != null) {
-                    return alphaCode2.getCode();
-                }
-            }
-        }
-        return null;
-    }
-
 }

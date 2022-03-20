@@ -1,11 +1,14 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-public class Country {
+import optional4j.spec.Optional;
+import optional4j.spec.Present;
+
+public class Country implements Present<Country> {
 
     private IsoCode isoCode;
 
-    public IsoCode getIsoCode() {
-        return isoCode;
+    public Optional<IsoCode> getIsoCode() {
+        return isoCode != null ? isoCode : Optional.empty();
     }
 
     public void setIsoCode(IsoCode isoCode) {

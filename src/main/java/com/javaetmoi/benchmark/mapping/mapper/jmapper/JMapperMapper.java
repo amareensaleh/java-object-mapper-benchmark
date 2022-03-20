@@ -31,7 +31,7 @@ public class JMapperMapper implements OrderMapper {
                     .add(attribute("billingCity").value("${customer.billingAddress.city}"))
                     .add(attribute("products").value("products"))
                     .add(attribute("customerName").value("${customer.name}")))
-                .add(mappedClass(ProductDTO.class)
+                    .add(mappedClass(ProductDTO.class)
                     .add(attribute("name").value("name")));
 
         mapper = new JMapper<OrderDTO, Order>(OrderDTO.class, Order.class, api);
@@ -41,33 +41,33 @@ public class JMapperMapper implements OrderMapper {
     public OrderDTO map(Order source) {
         // Waiting https://github.com/jmapper-framework/jmapper-core/issues/43
         // By waiting: hand mapping with by practice 'cause we are changing the source object.
-        if (source.getCustomer() == null) {
-            source.setCustomer(new Customer());
-        }
-        if (source.getCustomer().getShippingAddress() == null) {
-            source.getCustomer().setShippingAddress(new Address());
-        }
-        if (source.getCustomer().getBillingAddress() == null) {
-            source.getCustomer().setBillingAddress(new Address());
-        }
-        if (source.getCustomer().getShippingAddress().getCountry() == null) {
-            source.getCustomer().getShippingAddress().setCountry(new Country());
-        }
-        if (source.getCustomer().getShippingAddress().getCountry().getIsoCode() == null) {
-            source.getCustomer().getShippingAddress().getCountry().setIsoCode(new IsoCode());
-        }
-        if (source.getCustomer().getShippingAddress().getCountry().getIsoCode().getAlphaCode2() == null) {
-            source.getCustomer().getShippingAddress().getCountry().getIsoCode().setAlphaCode2(new AlphaCode2());
-        }
-        if (source.getCustomer().getBillingAddress().getCountry() == null) {
-            source.getCustomer().getBillingAddress().setCountry(new Country());
-        }
-        if (source.getCustomer().getBillingAddress().getCountry().getIsoCode() == null) {
-            source.getCustomer().getBillingAddress().getCountry().setIsoCode(new IsoCode());
-        }
-        if (source.getCustomer().getBillingAddress().getCountry().getIsoCode().getAlphaCode2() == null) {
-            source.getCustomer().getBillingAddress().getCountry().getIsoCode().setAlphaCode2(new AlphaCode2());
-        }
+//        if (source.getCustomer() == null) {
+//            source.setCustomer(new Customer());
+//        }
+//        if (source.getCustomer().getShippingAddress() == null) {
+//            source.getCustomer().setShippingAddress(new Address());
+//        }
+//        if (source.getCustomer().getBillingAddress() == null) {
+//            source.getCustomer().setBillingAddress(new Address());
+//        }
+//        if (source.getCustomer().getShippingAddress().getCountry() == null) {
+//            source.getCustomer().getShippingAddress().setCountry(new Country());
+//        }
+//        if (source.getCustomer().getShippingAddress().getCountry().getIsoCode() == null) {
+//            source.getCustomer().getShippingAddress().getCountry().setIsoCode(new IsoCode());
+//        }
+//        if (source.getCustomer().getShippingAddress().getCountry().getIsoCode().getAlphaCode2() == null) {
+//            source.getCustomer().getShippingAddress().getCountry().getIsoCode().setAlphaCode2(new AlphaCode2());
+//        }
+//        if (source.getCustomer().getBillingAddress().getCountry() == null) {
+//            source.getCustomer().getBillingAddress().setCountry(new Country());
+//        }
+//        if (source.getCustomer().getBillingAddress().getCountry().getIsoCode() == null) {
+//            source.getCustomer().getBillingAddress().getCountry().setIsoCode(new IsoCode());
+//        }
+//        if (source.getCustomer().getBillingAddress().getCountry().getIsoCode().getAlphaCode2() == null) {
+//            source.getCustomer().getBillingAddress().getCountry().getIsoCode().setAlphaCode2(new AlphaCode2());
+//        }
         return mapper.getDestination(source);
     }
 
