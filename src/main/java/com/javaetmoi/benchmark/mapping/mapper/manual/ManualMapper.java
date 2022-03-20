@@ -4,6 +4,7 @@ import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
 import com.javaetmoi.benchmark.mapping.model.dto.ProductDTO;
 import com.javaetmoi.benchmark.mapping.model.entity.Address;
+import com.javaetmoi.benchmark.mapping.model.entity.AlphaCode2;
 import com.javaetmoi.benchmark.mapping.model.entity.Country;
 import com.javaetmoi.benchmark.mapping.model.entity.Customer;
 import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
@@ -11,36 +12,46 @@ import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
-import optional4j.spec.Optional;
 
 
 public final class ManualMapper implements OrderMapper {
+
+    private static final Customer CUSTOMER = new Customer();
+
+    private static final Address ADDRESS = new Address();
+
+    private static final AlphaCode2 ALPHA_CODE_2 = new AlphaCode2();
 
     @Override
     public OrderDTO map(Order order) {
 
         OrderDTO orderDTO = new OrderDTO();
 
-        order.getCustomer().ifPresent(aCustomer -> {
+        orderDTO.setCustomerName(order.getCustomer().orElse(CUSTOMER).getName());
 
-            orderDTO.setCustomerName(aCustomer.getName());
+        Address billingAddress = order.getCustomer().flatMap(Customer::getBillingAddress)
+                .orElse(ADDRESS);
+        orderDTO.setBillingCity(billingAddress.getCity());
+        orderDTO.setBillingStreetAddress(billingAddress.getStreet());
 
-            aCustomer.getBillingAddress().ifPresent(address -> {
-                orderDTO.setBillingCity(address.getCity());
-                orderDTO.setBillingStreetAddress(address.getStreet());
-                address.getCountry().flatMap(Country::getIsoCode)
-                        .flatMap(IsoCode::getAlphaCode2)
-                        .ifPresent(alphaCode2 -> orderDTO.setBillingAlphaCode2(alphaCode2.getCode()));
-            });
+        orderDTO.setBillingAlphaCode2(order.getCustomer().flatMap(Customer::getBillingAddress)
+                .flatMap(Address::getCountry)
+                .flatMap(Country::getIsoCode)
+                .flatMap(IsoCode::getAlphaCode2)
+                .orElse(ALPHA_CODE_2)
+                .getCode());
 
-            aCustomer.getShippingAddress().ifPresent(address -> {
-                orderDTO.setShippingCity(address.getCity());
-                orderDTO.setShippingStreetAddress(address.getStreet());
-                address.getCountry().flatMap(Country::getIsoCode)
-                        .flatMap(IsoCode::getAlphaCode2)
-                        .ifPresent(alphaCode2 -> orderDTO.setShippingAlphaCode2(alphaCode2.getCode()));
-            });
-        });
+        Address shippingAddress = order.getCustomer().flatMap(Customer::getShippingAddress)
+                .orElse(ADDRESS);
+        orderDTO.setShippingCity(shippingAddress.getCity());
+        orderDTO.setShippingStreetAddress(shippingAddress.getStreet());
+
+        orderDTO.setBillingAlphaCode2(order.getCustomer().flatMap(Customer::getShippingAddress)
+                .flatMap(Address::getCountry)
+                .flatMap(Country::getIsoCode)
+                .flatMap(IsoCode::getAlphaCode2)
+                .orElse(ALPHA_CODE_2)
+                .getCode());
 
         if (order.getProducts() != null) {
             List<ProductDTO> targetProducts = new ArrayList<ProductDTO>(order.getProducts().size());
@@ -51,4 +62,5 @@ public final class ManualMapper implements OrderMapper {
         }
         return orderDTO;
     }
+
 }
