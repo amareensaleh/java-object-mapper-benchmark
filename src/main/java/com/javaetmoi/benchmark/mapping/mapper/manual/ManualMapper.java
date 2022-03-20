@@ -46,7 +46,7 @@ public final class ManualMapper implements OrderMapper {
         orderDTO.setShippingCity(shippingAddress.getCity());
         orderDTO.setShippingStreetAddress(shippingAddress.getStreet());
 
-        orderDTO.setBillingAlphaCode2(order.getCustomer().flatMap(Customer::getShippingAddress)
+        orderDTO.setShippingAlphaCode2(order.getCustomer().flatMap(Customer::getShippingAddress)
                 .flatMap(Address::getCountry)
                 .flatMap(Country::getIsoCode)
                 .flatMap(IsoCode::getAlphaCode2)
