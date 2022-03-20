@@ -3,18 +3,16 @@ package com.javaetmoi.benchmark;
 import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.mapper.bull.BullMapper;
 import com.javaetmoi.benchmark.mapping.mapper.datus.DatusMapper;
-//import com.javaetmoi.benchmark.mapping.mapper.dozer.DozerMapper;
-//import com.javaetmoi.benchmark.mapping.mapper.jmapper.JMapperMapper;
 import com.javaetmoi.benchmark.mapping.mapper.manual.ManualMapper;
 import com.javaetmoi.benchmark.mapping.mapper.mapstruct.MapStructMapper;
 import com.javaetmoi.benchmark.mapping.mapper.modelmapper.ModelMapper;
 import com.javaetmoi.benchmark.mapping.mapper.orika.OrikaMapper;
 import com.javaetmoi.benchmark.mapping.mapper.remappe.ReMappeMapper;
-//import com.javaetmoi.benchmark.mapping.mapper.selma.SelmaMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.OrderFactory;
 import java.util.Collection;
+import java.util.Optional;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
@@ -79,13 +77,14 @@ public class MapperBenchmark {
     @Setup(Level.Iteration)
     public void preInit() {
         order = OrderFactory.buildOrder();
+        for (int i = 0; i < 1000; i++) {
+            Optional.ofNullable(null);
+        }
     }
 
     @Benchmark
-    public OrderDTO mapper(Blackhole blackhole) {
-        OrderDTO orderDTO = mapper.map(order);
-        blackhole.consume(orderDTO);
-        return orderDTO;
+    public OrderDTO mapper() {
+        return mapper.map(order);
     }
 
     public static void main(String... args) throws Exception {
