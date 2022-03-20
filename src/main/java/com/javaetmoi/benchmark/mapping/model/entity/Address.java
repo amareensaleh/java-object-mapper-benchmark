@@ -1,8 +1,22 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
+import java.util.Optional;
+
 public class Address {
-    String street;
-    String city;
+
+    private Country country;
+
+    private String street;
+
+    private String city;
+
+    public Optional<Country> getCountry() {
+        return Optional.ofNullable(country);
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
     public String getStreet() {
         return street;

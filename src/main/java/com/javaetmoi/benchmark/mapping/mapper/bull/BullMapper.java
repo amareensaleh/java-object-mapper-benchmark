@@ -20,7 +20,9 @@ public class BullMapper implements OrderMapper {
                 new FieldMapping("customer.billingAddress.city", "billingCity"),
                 new FieldMapping("customer.billingAddress.street", "billingStreetAddress"),
                 new FieldMapping("customer.shippingAddress.city", "shippingCity"),
-                new FieldMapping("customer.shippingAddress.street", "shippingStreetAddress")
+                new FieldMapping("customer.shippingAddress.street", "shippingStreetAddress"),
+                new FieldMapping("customer.shippingAddress.country.isoCode.alphaCode2.code", "shippingAlphaCode2"),
+                new FieldMapping("customer.billingAddress.country.isoCode.alphaCode2.code", "billingAlphaCode2")
         };
         this.transformer = new BeanUtils().getTransformer().withFieldMapping(fieldMappings);
     }

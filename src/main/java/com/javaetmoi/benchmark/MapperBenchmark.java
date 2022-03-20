@@ -14,15 +14,20 @@ import com.javaetmoi.benchmark.mapping.mapper.remappe.ReMappeMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.OrderFactory;
-import org.openjdk.jmh.annotations.*;
+import java.util.Collection;
+import org.openjdk.jmh.annotations.Benchmark;
+import org.openjdk.jmh.annotations.Level;
+import org.openjdk.jmh.annotations.Param;
+import org.openjdk.jmh.annotations.Scope;
+import org.openjdk.jmh.annotations.Setup;
+import org.openjdk.jmh.annotations.State;
+import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.results.Result;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.options.Options;
 import org.openjdk.jmh.runner.options.OptionsBuilder;
-
-import java.util.Collection;
 
 @State(Scope.Benchmark)
 public class MapperBenchmark {
@@ -77,28 +82,29 @@ public class MapperBenchmark {
     }
 
     @Benchmark
-    public OrderDTO mapper() {
-        return mapper.map(order);
+    public OrderDTO mapper(Blackhole blackhole) {
+        OrderDTO orderDTO = mapper.map(order);
+        blackhole.consume(orderDTO);
+        return orderDTO;
     }
 
     public static void main(String... args) throws Exception {
         Options opts = new OptionsBuilder()
-            .include(MapperBenchmark.class.getSimpleName())
-            .warmupIterations(5)
-            .measurementIterations(5)
-            .jvmArgs("-server")
-            .forks(1)
-            .resultFormat(ResultFormatType.TEXT)
-            .build();
+                .include(MapperBenchmark.class.getSimpleName())
+                .warmupIterations(5)
+                .measurementIterations(5)
+                .jvmArgs("-server")
+                .forks(1)
+                .resultFormat(ResultFormatType.TEXT)
+                .build();
 
         Collection<RunResult> results = new Runner(opts).run();
         for (RunResult result : results) {
             Result<?> r = result.getPrimaryResult();
             System.out.println("API replied benchmark score: "
-                + r.getScore() + " "
-                + r.getScoreUnit() + " over "
-                + r.getStatistics().getN() + " iterations");
+                    + r.getScore() + " "
+                    + r.getScoreUnit() + " over "
+                    + r.getStatistics().getN() + " iterations");
         }
     }
-
 }
