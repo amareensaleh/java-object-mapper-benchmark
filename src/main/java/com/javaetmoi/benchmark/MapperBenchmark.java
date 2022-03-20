@@ -15,6 +15,7 @@ import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.OrderFactory;
 import java.util.Collection;
+import optional4j.spec.Optional;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Level;
 import org.openjdk.jmh.annotations.Param;
@@ -79,13 +80,14 @@ public class MapperBenchmark {
     @Setup(Level.Iteration)
     public void preInit() {
         order = OrderFactory.buildOrder();
+        for (int i = 0; i < 100; i++) {
+            Optional.ofNullable(null);
+        }
     }
 
     @Benchmark
     public OrderDTO mapper(Blackhole blackhole) {
-        OrderDTO orderDTO = mapper.map(order);
-        blackhole.consume(orderDTO);
-        return orderDTO;
+        return mapper.map(order);
     }
 
     public static void main(String... args) throws Exception {
