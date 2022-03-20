@@ -4,7 +4,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class Order {
+
     private Customer customer;
+
     private List<Product> products;
 
     public Optional<Customer> getCustomer() {

@@ -3,9 +3,12 @@ package com.javaetmoi.benchmark.mapping.model.entity;
 import java.util.Optional;
 
 public class Customer {
-    String name;
-    Address shippingAddress;
-    Address billingAddress;
+
+    private String name;
+
+    private Address shippingAddress;
+
+    private Address billingAddress;
 
     public Optional<Address> getShippingAddress() {
         return Optional.ofNullable(shippingAddress);

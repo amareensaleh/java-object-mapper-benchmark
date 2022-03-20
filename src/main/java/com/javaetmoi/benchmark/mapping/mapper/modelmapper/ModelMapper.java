@@ -2,12 +2,9 @@ package com.javaetmoi.benchmark.mapping.mapper.modelmapper;
 
 import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
-import com.javaetmoi.benchmark.mapping.model.entity.Address;
 import com.javaetmoi.benchmark.mapping.model.entity.Country;
-import com.javaetmoi.benchmark.mapping.model.entity.Customer;
 import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
-import optional4j.spec.Optional;
 import org.modelmapper.Converter;
 import org.modelmapper.PropertyMap;
 
