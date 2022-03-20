@@ -15,21 +15,23 @@ public abstract class AbstractMapperTest {
     public void map_with_all_fields() {
         Order order = OrderFactory.buildOrder();
         OrderDTO orderDTO = testedOrderMapper().map(order);
-        assertEquals(orderDTO.getCustomerName(), "Joe Smith");
-        assertEquals(orderDTO.getBillingStreetAddress(), "1234 Market Street");
-        assertEquals(orderDTO.getBillingCity(), "San Fran");
-        assertEquals(orderDTO.getShippingStreetAddress(), "1234 West Townsend");
-        assertEquals(orderDTO.getShippingCity(), "Boston");
-        assertEquals(orderDTO.getProducts().get(0).getName(), "socks");
-        assertEquals(orderDTO.getProducts().get(1).getName(), "shoes");
+        assertEquals("Joe Smith", orderDTO.getCustomerName());
+        assertEquals("1234 Market Street", orderDTO.getBillingStreetAddress());
+        assertEquals("San Fran", orderDTO.getBillingCity());
+        assertEquals("1234 West Townsend", orderDTO.getShippingStreetAddress());
+        assertEquals("Boston", orderDTO.getShippingCity());
+        assertEquals("socks", orderDTO.getProducts().get(0).getName());
+        assertEquals("shoes", orderDTO.getProducts().get(1).getName());
+        assertEquals("US", orderDTO.getBillingAlphaCode2());
+        assertEquals("US", orderDTO.getShippingAlphaCode2());
     }
 
     @Test
     public void map_with_partial_order() {
         Order order = OrderFactory.buildPartialOrder();
         OrderDTO orderDTO = testedOrderMapper().map(order);
-        assertEquals(orderDTO.getCustomerName(), "John Doe");
-        assertEquals(orderDTO.getBillingStreetAddress(), "93 Newcastle Dr.");
+        assertEquals("John Doe", orderDTO.getCustomerName());
+        assertEquals("93 Newcastle Dr.", orderDTO.getBillingStreetAddress());
         assertTrue(orderDTO.getProducts().isEmpty());
     }
 

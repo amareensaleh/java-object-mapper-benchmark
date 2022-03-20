@@ -6,9 +6,12 @@ import optional4j.spec.Optional;
 import optional4j.spec.Present;
 
 public class Customer implements Present<Customer> {
-    String name;
-    Address shippingAddress;
-    Address billingAddress;
+
+    private String name;
+
+    private Address shippingAddress;
+
+    private Address billingAddress;
 
     public Optional<Address> getShippingAddress() {
         return shippingAddress != null ? shippingAddress: Absent.nothing();

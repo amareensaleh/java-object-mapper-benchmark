@@ -4,6 +4,7 @@ package com.javaetmoi.benchmark.mapping.model.entity;
 import optional4j.spec.Present;
 
 public class Product implements Present<Product> {
+
     private String name;
 
     public Product(String name) {

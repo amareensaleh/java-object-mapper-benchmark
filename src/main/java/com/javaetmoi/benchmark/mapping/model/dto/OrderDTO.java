@@ -5,11 +5,36 @@ import java.util.List;
 public class OrderDTO {
 
 	private List<ProductDTO> products;
-    String customerName;
+
+    private String customerName;
+
     private String shippingStreetAddress;
+
     private String shippingCity;
+
     private String billingStreetAddress;
+
     private String billingCity;
+
+    private String shippingAlphaCode2;
+
+    private String billingAlphaCode2;
+
+    public String getShippingAlphaCode2() {
+        return shippingAlphaCode2;
+    }
+
+    public void setShippingAlphaCode2(String shippingAlphaCode2) {
+        this.shippingAlphaCode2 = shippingAlphaCode2;
+    }
+
+    public String getBillingAlphaCode2() {
+        return billingAlphaCode2;
+    }
+
+    public void setBillingAlphaCode2(String billingAlphaCode2) {
+        this.billingAlphaCode2 = billingAlphaCode2;
+    }
 
     public String getCustomerName() {
         return customerName;

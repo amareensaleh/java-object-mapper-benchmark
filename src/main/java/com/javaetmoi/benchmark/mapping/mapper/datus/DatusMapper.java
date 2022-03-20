@@ -7,7 +7,10 @@ import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
 import com.javaetmoi.benchmark.mapping.model.dto.ProductDTO;
 import com.javaetmoi.benchmark.mapping.model.entity.Address;
+import com.javaetmoi.benchmark.mapping.model.entity.AlphaCode2;
+import com.javaetmoi.benchmark.mapping.model.entity.Country;
 import com.javaetmoi.benchmark.mapping.model.entity.Customer;
+import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.Product;
 
@@ -34,6 +37,19 @@ public class DatusMapper implements OrderMapper {
             .map(customer -> customer.flatMap(Customer::getShippingAddress))
             .map(address -> address.map(Address::getStreet).orElse(null)).into(OrderDTO::setShippingStreetAddress)
             .from(Order::getProducts).nullsafe()
+            .from(Order::getCustomer).nullsafe()
+            .map(Customer::getShippingAddress).map(Address::getCountry)
+            .map(Country::getIsoCode)
+            .map(IsoCode::getAlphaCode2)
+            .map(AlphaCode2::getCode)
+            .into(OrderDTO::setShippingAlphaCode2)
+            .from(Order::getCustomer).nullsafe()
+            .map(Customer::getBillingAddress).map(Address::getCountry)
+            .map(Country::getIsoCode)
+            .map(IsoCode::getAlphaCode2)
+            .map(AlphaCode2::getCode)
+            .into(OrderDTO::setBillingAlphaCode2)
+
             .map(productMapper::convert).into(OrderDTO::setProducts)
             .build();
 

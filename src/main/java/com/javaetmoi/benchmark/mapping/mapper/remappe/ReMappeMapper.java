@@ -33,6 +33,20 @@ public final class ReMappeMapper implements OrderMapper {
         .useMapper(mapperToDtoProduct)
         .mapper();
 
+    private String getAlphaCode2(Address address) {
+        Country country = address.getCountry();
+        if (country != null) {
+            IsoCode isoCode = country.getIsoCode();
+            if (isoCode != null) {
+                AlphaCode2 alphaCode2 = isoCode.getAlphaCode2();
+                if (alphaCode2 != null) {
+                    return alphaCode2.getCode();
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
     public OrderDTO map(Order source) {
         return mapperToDto.map(source);

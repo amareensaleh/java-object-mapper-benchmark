@@ -5,7 +5,6 @@ public class ProductDTO {
 	private String name;
 
     public ProductDTO() {
-
     }
 
     public ProductDTO(String name) {

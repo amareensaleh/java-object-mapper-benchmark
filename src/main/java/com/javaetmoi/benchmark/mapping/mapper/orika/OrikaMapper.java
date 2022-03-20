@@ -2,14 +2,10 @@ package com.javaetmoi.benchmark.mapping.mapper.orika;
 
 import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
-import com.javaetmoi.benchmark.mapping.model.entity.Customer;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import ma.glasnost.orika.BoundMapperFacade;
-import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.MappingContext;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import optional4j.spec.Optional;
 
 /**
  * Using custom BoundMapperFacade with no object graph cycles.
@@ -23,28 +19,17 @@ public class OrikaMapper implements OrderMapper {
     public OrikaMapper() {
         MapperFactory factory = new DefaultMapperFactory.Builder().build();
         factory.registerClassMap(factory.classMap(Order.class, OrderDTO.class)
+                .field("customer.name", "customerName")
+                .field("customer.billingAddress.street",
+                        "billingStreetAddress")
+                .field("customer.billingAddress.city", "billingCity")
+                .field("customer.shippingAddress.street",
+                        "shippingStreetAddress")
+                .field("customer.shippingAddress.city",
+                        "shippingCity")
                 .field("products", "products")
-                .customize(new CustomMapper<Order, OrderDTO>() {
-                    @Override
-                    public void mapAtoB(Order order, OrderDTO orderDTO, MappingContext context) {
-
-                        Optional<Customer> customer = order.getCustomer();
-
-                        customer.ifPresent(aCustomer -> orderDTO.setCustomerName(aCustomer.getName()));
-
-                        customer.flatMap(Customer::getShippingAddress)
-                                .ifPresent(address -> {
-                                    orderDTO.setShippingCity(address.getCity());
-                                    orderDTO.setShippingStreetAddress(address.getStreet());
-                                });
-
-                        customer.flatMap(Customer::getBillingAddress)
-                                .ifPresent(address -> {
-                                    orderDTO.setBillingCity(address.getCity());
-                                    orderDTO.setBillingStreetAddress(address.getStreet());
-                                });
-                    }
-                })
+                .field("customer.billingAddress.country.isoCode.alphaCode2.code", "billingAlphaCode2")
+                .field("customer.shippingAddress.country.isoCode.alphaCode2.code", "shippingAlphaCode2")
                 .toClassMap());
         orderMapper = factory.getMapperFacade(Order.class, OrderDTO.class, false);
     }

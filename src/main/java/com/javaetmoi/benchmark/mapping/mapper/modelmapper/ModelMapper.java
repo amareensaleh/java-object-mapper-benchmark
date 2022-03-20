@@ -32,6 +32,8 @@ public class ModelMapper implements OrderMapper {
         modelMapper.addMappings(new PropertyMap<Order, OrderDTO>() {
             @Override
             protected void configure() {
+                map().setShippingAlphaCode2(source.getCustomer().getShippingAddress().getCountry().getIsoCode().getAlphaCode2().getCode());
+                map().setBillingAlphaCode2(source.getCustomer().getBillingAddress().getCountry().getIsoCode().getAlphaCode2().getCode());
             }
         }).setPostConverter(POST_CONVERTER);
     }
