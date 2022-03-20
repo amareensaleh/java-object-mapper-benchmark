@@ -1,9 +1,12 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
 public class Customer {
-    String name;
-    Address shippingAddress;
-    Address billingAddress;
+
+    private String name;
+
+    private Address shippingAddress;
+
+    private Address billingAddress;
 
     public Address getShippingAddress() {
         return shippingAddress;

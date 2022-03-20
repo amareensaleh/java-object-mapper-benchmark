@@ -28,6 +28,8 @@ public class OrikaMapper implements OrderMapper {
                 .field("customer.shippingAddress.city",
                         "shippingCity")
                 .field("products", "products")
+                .field("customer.billingAddress.country.isoCode.alphaCode2.code", "billingAlphaCode2")
+                .field("customer.shippingAddress.country.isoCode.alphaCode2.code", "shippingAlphaCode2")
                 .toClassMap());
         orderMapper = factory.getMapperFacade(Order.class, OrderDTO.class, false);
     }

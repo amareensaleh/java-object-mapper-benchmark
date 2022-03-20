@@ -1,8 +1,20 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
 public class Address {
-    String street;
-    String city;
+
+    private Country country;
+
+    private String street;
+
+    private String city;
+
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
 
     public String getStreet() {
         return street;

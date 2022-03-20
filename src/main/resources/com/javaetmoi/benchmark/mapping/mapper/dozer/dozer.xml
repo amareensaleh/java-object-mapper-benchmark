@@ -25,5 +25,13 @@
             <a>customer.shippingAddress.city</a>
             <b>shippingCity</b>
         </field>
+        <field>
+            <a>customer.shippingAddress.country.isoCode.alphaCode2.code</a>
+            <b>shippingAlphaCode2</b>
+        </field>
+        <field>
+            <a>customer.billingAddress.country.isoCode.alphaCode2.code</a>
+            <b>billingAlphaCode2</b>
+        </field>
     </mapping>
 </mappings>

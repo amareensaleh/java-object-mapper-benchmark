@@ -18,6 +18,8 @@ public class ModelMapper implements OrderMapper {
                 map().setBillingCity(source.getCustomer().getBillingAddress().getCity());
                 map().setShippingStreetAddress(source.getCustomer().getShippingAddress().getStreet());
                 map().setShippingCity(source.getCustomer().getShippingAddress().getCity());
+                map().setShippingAlphaCode2(source.getCustomer().getShippingAddress().getCountry().getIsoCode().getAlphaCode2().getCode());
+                map().setBillingAlphaCode2(source.getCustomer().getBillingAddress().getCountry().getIsoCode().getAlphaCode2().getCode());
             }
         });
     }

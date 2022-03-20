@@ -12,6 +12,9 @@ import fr.xebia.extras.selma.Mapper;
                 @Field({"customer.name", "customerName"}),
                 @Field({"customer.billingAddress.street", "billingStreetAddress"}),
                 @Field({"customer.billingAddress.city", "billingCity"}),
+                @Field({"customer.billingAddress.country.isoCode.alphaCode2.code", "billingAlphacode2"}),
+                @Field({"customer.shippingAddress.country.isoCode.alphaCode2.code", "shippingAlphacode2"}),
+                @Field({"customer.billingAddress.city", "billingCity"}),
                 @Field({"customer.shippingAddress.street", "shippingStreetAddress"}),
                 @Field({"customer.shippingAddress.city", "shippingCity"})
         }

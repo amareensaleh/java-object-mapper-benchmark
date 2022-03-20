@@ -3,7 +3,9 @@ package com.javaetmoi.benchmark.mapping.model.entity;
 import java.util.List;
 
 public class Order {
+
     private Customer customer;
+
     private List<Product> products;
 
     public Customer getCustomer() {
