@@ -8,7 +8,7 @@ import com.javaetmoi.benchmark.mapping.model.entity.Country;
 import com.javaetmoi.benchmark.mapping.model.entity.Customer;
 import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
-import java.util.Optional;
+import optional4j.spec.Optional;
 import org.modelmapper.Converter;
 import org.modelmapper.PropertyMap;
 

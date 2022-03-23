@@ -1,7 +1,9 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
 
-public class AlphaCode2 {
+import optional4j.spec.Present;
+
+public class AlphaCode2 implements Present<AlphaCode2> {
 
     private String code;
 

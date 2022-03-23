@@ -12,7 +12,7 @@ import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import optional4j.spec.Optional;
 
 
 public final class ManualMapper implements OrderMapper {
