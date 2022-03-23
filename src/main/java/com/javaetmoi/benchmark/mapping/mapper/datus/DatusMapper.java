@@ -15,6 +15,11 @@ import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.Product;
 
 public class DatusMapper implements OrderMapper {
+
+    private static final Customer CUSTOMER = new Customer();
+    private static final Address ADDRESS = new Address();
+    private static final AlphaCode2 ALPHA_CODE_2 = new AlphaCode2();
+
     private static final Mapper<Product, ProductDTO> productMapper = Datus.forTypes(Product.class, ProductDTO.class)
             .immutable((String name) -> new ProductDTO(name))
             .from(Product::getName).to(ConstructorParameter::bind)
@@ -24,36 +29,38 @@ public class DatusMapper implements OrderMapper {
             .mutable(OrderDTO::new)
 
             .from(Order::getCustomer).nullsafe()
-            .map(customer -> customer.map(Customer::getName).orElse(null)).into(OrderDTO::setCustomerName)
+            .map(customer -> customer.orElse(CUSTOMER).getName()).into(OrderDTO::setCustomerName)
 
             .from(Order::getCustomer).nullsafe()
-            .map(customer -> customer.flatMap(Customer::getBillingAddress).map(Address::getCity).orElse(null))
+            .map(customer -> customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getCity())
             .into(OrderDTO::setBillingCity)
 
             .from(Order::getCustomer).nullsafe()
-            .map(customer -> customer.flatMap(Customer::getBillingAddress).map(Address::getStreet).orElse(null))
+            .map(customer -> customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getStreet())
             .into(OrderDTO::setBillingStreetAddress)
 
             .from(Order::getCustomer).nullsafe()
-            .map(customer -> customer.flatMap(Customer::getShippingAddress).map(Address::getCity).orElse(null))
+            .map(customer -> customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getCity())
             .into(OrderDTO::setShippingCity)
 
             .from(Order::getCustomer).nullsafe()
-            .map(customer -> customer.flatMap(Customer::getShippingAddress).map(Address::getStreet).orElse(null))
+            .map(customer -> customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getStreet())
             .into(OrderDTO::setShippingStreetAddress)
 
             .from(Order::getCustomer).nullsafe()
             .map(customer -> customer.flatMap(Customer::getShippingAddress).flatMap(Address::getCountry)
                     .flatMap(Country::getIsoCode)
                     .flatMap(IsoCode::getAlphaCode2)
-                    .map(AlphaCode2::getCode).orElse(null))
+                    .orElse(ALPHA_CODE_2)
+                    .getCode())
             .into(OrderDTO::setShippingAlphaCode2)
 
             .from(Order::getCustomer).nullsafe()
             .map(customer -> customer.flatMap(Customer::getBillingAddress).flatMap(Address::getCountry)
                     .flatMap(Country::getIsoCode)
                     .flatMap(IsoCode::getAlphaCode2)
-                    .map(AlphaCode2::getCode).orElse(null))
+                    .orElse(ALPHA_CODE_2)
+                    .getCode())
             .into(OrderDTO::setBillingAlphaCode2)
 
             .from(Order::getProducts).nullsafe()
