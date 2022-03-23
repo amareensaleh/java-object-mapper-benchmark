@@ -12,14 +12,13 @@ import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.Product;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 public final class ManualMapper implements OrderMapper {
 
     private static final Customer CUSTOMER = new Customer();
-
     private static final Address ADDRESS = new Address();
-
     private static final AlphaCode2 ALPHA_CODE_2 = new AlphaCode2();
 
     @Override
@@ -29,29 +28,17 @@ public final class ManualMapper implements OrderMapper {
 
         orderDTO.setCustomerName(order.getCustomer().orElse(CUSTOMER).getName());
 
-        Address billingAddress = order.getCustomer().flatMap(Customer::getBillingAddress)
-                .orElse(ADDRESS);
+        Optional<Address> optBillingAddress = order.getCustomer().flatMap(Customer::getBillingAddress);
+        Address billingAddress = optBillingAddress.orElse(ADDRESS);
         orderDTO.setBillingCity(billingAddress.getCity());
         orderDTO.setBillingStreetAddress(billingAddress.getStreet());
+        orderDTO.setBillingAlphaCode2(optBillingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
 
-        orderDTO.setBillingAlphaCode2(order.getCustomer().flatMap(Customer::getBillingAddress)
-                .flatMap(Address::getCountry)
-                .flatMap(Country::getIsoCode)
-                .flatMap(IsoCode::getAlphaCode2)
-                .orElse(ALPHA_CODE_2)
-                .getCode());
-
-        Address shippingAddress = order.getCustomer().flatMap(Customer::getShippingAddress)
-                .orElse(ADDRESS);
+        Optional<Address> optShippingAddress = order.getCustomer().flatMap(Customer::getShippingAddress);
+        Address shippingAddress = optShippingAddress.orElse(ADDRESS);
         orderDTO.setShippingCity(shippingAddress.getCity());
         orderDTO.setShippingStreetAddress(shippingAddress.getStreet());
-
-        orderDTO.setShippingAlphaCode2(order.getCustomer().flatMap(Customer::getShippingAddress)
-                .flatMap(Address::getCountry)
-                .flatMap(Country::getIsoCode)
-                .flatMap(IsoCode::getAlphaCode2)
-                .orElse(ALPHA_CODE_2)
-                .getCode());
+        orderDTO.setShippingAlphaCode2(optShippingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
 
         if (order.getProducts() != null) {
             List<ProductDTO> targetProducts = new ArrayList<ProductDTO>(order.getProducts().size());

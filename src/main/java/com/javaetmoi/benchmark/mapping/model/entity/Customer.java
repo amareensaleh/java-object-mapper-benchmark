@@ -1,11 +1,8 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
+import java.util.Optional;
 
-import optional4j.spec.Absent;
-import optional4j.spec.Optional;
-import optional4j.spec.Present;
-
-public class Customer implements Present<Customer> {
+public class Customer {
 
     private String name;
 
@@ -14,7 +11,7 @@ public class Customer implements Present<Customer> {
     private Address billingAddress;
 
     public Optional<Address> getShippingAddress() {
-        return shippingAddress != null ? shippingAddress: Absent.nothing();
+        return Optional.ofNullable(shippingAddress);
     }
 
     public void setShippingAddress(Address shippingAddress) {
@@ -22,7 +19,7 @@ public class Customer implements Present<Customer> {
     }
 
     public Optional<Address> getBillingAddress() {
-        return billingAddress != null ? billingAddress: Absent.nothing();
+        return Optional.ofNullable(billingAddress);
     }
 
     public void setBillingAddress(Address billingAddress) {

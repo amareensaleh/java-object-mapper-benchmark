@@ -1,9 +1,8 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-import optional4j.spec.Optional;
-import optional4j.spec.Present;
+import java.util.Optional;
 
-public class Address implements Present<Address> {
+public class Address {
 
     private Country country;
 
@@ -12,7 +11,7 @@ public class Address implements Present<Address> {
     private String city;
 
     public Optional<Country> getCountry() {
-        return country != null ? country : Optional.empty();
+        return Optional.ofNullable(country);
     }
 
     public void setCountry(Country country) {

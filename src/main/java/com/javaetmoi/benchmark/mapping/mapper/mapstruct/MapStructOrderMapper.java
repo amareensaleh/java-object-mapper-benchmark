@@ -10,7 +10,7 @@ import com.javaetmoi.benchmark.mapping.model.entity.Customer;
 import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.Product;
-import optional4j.spec.Optional;
+import java.util.Optional;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
@@ -18,6 +18,10 @@ import org.mapstruct.Named;
 
 @Mapper
 public interface MapStructOrderMapper extends OrderMapper {
+
+    Customer CUSTOMER = new Customer();
+    Address ADDRESS = new Address();
+    AlphaCode2 ALPHA_CODE_2 = new AlphaCode2();
 
     @Mappings({
             @Mapping(source = "customer", target = "customerName", qualifiedByName = "unwrapCustomerName"),
@@ -35,12 +39,12 @@ public interface MapStructOrderMapper extends OrderMapper {
 
     @Named("unwrapBillingStreet")
     default String unwrapBillingStreet(Optional<Customer> customer){
-        return customer.flatMap(Customer::getBillingAddress).map(Address::getStreet).orElse(null);
+        return customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getStreet();
     }
 
     @Named("unwrapShippingStreet")
     default String unwrapShippingStreet(Optional<Customer> customer){
-        return customer.flatMap(Customer::getShippingAddress).map(Address::getStreet).orElse(null);
+        return customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getStreet();
     }
 
     @Named("unwrapShippingAlphaCode2")
@@ -49,8 +53,8 @@ public interface MapStructOrderMapper extends OrderMapper {
                 .flatMap(Address::getCountry)
                 .flatMap(Country::getIsoCode)
                 .flatMap(IsoCode::getAlphaCode2)
-                .map(AlphaCode2::getCode)
-                .orElse(null);
+                .orElse(ALPHA_CODE_2)
+                .getCode();
     }
 
     @Named("unwrapBillingAlphaCode2")
@@ -59,22 +63,22 @@ public interface MapStructOrderMapper extends OrderMapper {
                 .flatMap(Address::getCountry)
                 .flatMap(Country::getIsoCode)
                 .flatMap(IsoCode::getAlphaCode2)
-                .map(AlphaCode2::getCode)
-                .orElse(null);
+                .orElse(ALPHA_CODE_2)
+                .getCode();
     }
 
     @Named("unwrapBillingCity")
     default String unwrapBillingCity(Optional<Customer> customer){
-        return customer.flatMap(Customer::getBillingAddress).map(Address::getCity).orElse(null);
+        return customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getCity();
     }
 
     @Named("unwrapShippingCity")
     default String unwrapShippingCity(Optional<Customer> customer){
-        return customer.flatMap(Customer::getShippingAddress).map(Address::getCity).orElse(null);
+        return customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getCity();
     }
 
     @Named("unwrapCustomerName")
     default String unwrapCustomerName(Optional<Customer> customer){
-        return customer.map(Customer::getName).orElse(null);
+        return customer.orElse(CUSTOMER).getName();
     }
 }

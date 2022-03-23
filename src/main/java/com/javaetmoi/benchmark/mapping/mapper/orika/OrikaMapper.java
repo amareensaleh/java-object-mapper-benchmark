@@ -2,6 +2,8 @@ package com.javaetmoi.benchmark.mapping.mapper.orika;
 
 import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
+import com.javaetmoi.benchmark.mapping.model.entity.Address;
+import com.javaetmoi.benchmark.mapping.model.entity.AlphaCode2;
 import com.javaetmoi.benchmark.mapping.model.entity.Country;
 import com.javaetmoi.benchmark.mapping.model.entity.Customer;
 import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
@@ -11,7 +13,7 @@ import ma.glasnost.orika.CustomMapper;
 import ma.glasnost.orika.MapperFactory;
 import ma.glasnost.orika.MappingContext;
 import ma.glasnost.orika.impl.DefaultMapperFactory;
-import optional4j.spec.Optional;
+import java.util.Optional;
 
 /**
  * Using custom BoundMapperFacade with no object graph cycles.
@@ -19,6 +21,10 @@ import optional4j.spec.Optional;
  * @see <a href="http://orika-mapper.github.io/orika-docs/performance-tuning.html">http://orika-mapper.github.io/orika-docs/performance-tuning.html</a>
  */
 public class OrikaMapper implements OrderMapper {
+
+    private static final Customer CUSTOMER = new Customer();
+    private static final Address ADDRESS = new Address();
+    private static final AlphaCode2 ALPHA_CODE_2 = new AlphaCode2();
 
     private BoundMapperFacade<Order, OrderDTO> orderMapper;
 
@@ -30,39 +36,22 @@ public class OrikaMapper implements OrderMapper {
                     @Override
                     public void mapAtoB(Order order, OrderDTO orderDTO, MappingContext context) {
 
-                        order.getCustomer().ifPresent(aCustomer -> {
+                        orderDTO.setCustomerName(order.getCustomer().orElse(CUSTOMER).getName());
 
-                            orderDTO.setCustomerName(aCustomer.getName());
+                        Optional<Address> optBillingAddress = order.getCustomer().flatMap(Customer::getBillingAddress);
+                        Address billingAddress = optBillingAddress.orElse(ADDRESS);
+                        orderDTO.setBillingCity(billingAddress.getCity());
+                        orderDTO.setBillingStreetAddress(billingAddress.getStreet());
+                        orderDTO.setBillingAlphaCode2(optBillingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
 
-                            aCustomer.getBillingAddress().ifPresent(address -> {
-                                orderDTO.setBillingCity(address.getCity());
-                                orderDTO.setBillingStreetAddress(address.getStreet());
-                                address.getCountry().flatMap(Country::getIsoCode)
-                                        .flatMap(IsoCode::getAlphaCode2)
-                                        .ifPresent(alphaCode2 -> orderDTO.setBillingAlphaCode2(alphaCode2.getCode()));
-                            });
+                        Optional<Address> optShippingAddress = order.getCustomer().flatMap(Customer::getShippingAddress);
+                        Address shippingAddress = optShippingAddress.orElse(ADDRESS);
+                        orderDTO.setShippingCity(shippingAddress.getCity());
+                        orderDTO.setShippingStreetAddress(shippingAddress.getStreet());
+                        orderDTO.setShippingAlphaCode2(optShippingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
 
-                            aCustomer.getShippingAddress().ifPresent(address -> {
-                                orderDTO.setShippingCity(address.getCity());
-                                orderDTO.setShippingStreetAddress(address.getStreet());
-                                address.getCountry().flatMap(Country::getIsoCode)
-                                        .flatMap(IsoCode::getAlphaCode2)
-                                        .ifPresent(alphaCode2 -> orderDTO.setShippingAlphaCode2(alphaCode2.getCode()));
-                            });
-                        });
                     }
                 })
-//                .field("customer.name", "customerName")
-//                .field("customer.billingAddress.street",
-//                        "billingStreetAddress")
-//                .field("customer.billingAddress.city", "billingCity")
-//                .field("customer.shippingAddress.street",
-//                        "shippingStreetAddress")
-//                .field("customer.shippingAddress.city",
-//                        "shippingCity")
-//                .field("products", "products")
-//                .field("customer.billingAddress.country.isoCode.alphaCode2.code", "billingAlphaCode2")
-//                .field("customer.shippingAddress.country.isoCode.alphaCode2.code", "shippingAlphaCode2")
                 .toClassMap());
         orderMapper = factory.getMapperFacade(Order.class, OrderDTO.class, false);
     }

@@ -1,14 +1,13 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-import optional4j.spec.Optional;
-import optional4j.spec.Present;
+import java.util.Optional;
 
-public class IsoCode implements Present<IsoCode> {
+public class IsoCode {
 
     private AlphaCode2 alphaCode2;
 
     public Optional<AlphaCode2> getAlphaCode2() {
-        return alphaCode2 != null ? alphaCode2 : Optional.empty();
+        return Optional.ofNullable(alphaCode2);
     }
 
     public void setAlphaCode2(AlphaCode2 alphaCode2) {
