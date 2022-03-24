@@ -25,20 +25,22 @@ public final class ManualMapper implements OrderMapper {
     public OrderDTO map(Order order) {
 
         OrderDTO orderDTO = new OrderDTO();
+        Optional<Customer> customer = order.getCustomer();
+        orderDTO.setCustomerName(customer.orElse(CUSTOMER).getName());
 
-        orderDTO.setCustomerName(order.getCustomer().orElse(CUSTOMER).getName());
+        Optional<Address> optBillingAddress = customer.flatMap(Customer::getBillingAddress);
+        orderDTO.setBillingAlphaCode2(optBillingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
 
-        Optional<Address> optBillingAddress = order.getCustomer().flatMap(Customer::getBillingAddress);
         Address billingAddress = optBillingAddress.orElse(ADDRESS);
         orderDTO.setBillingCity(billingAddress.getCity());
         orderDTO.setBillingStreetAddress(billingAddress.getStreet());
-        orderDTO.setBillingAlphaCode2(optBillingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
 
-        Optional<Address> optShippingAddress = order.getCustomer().flatMap(Customer::getShippingAddress);
+        Optional<Address> optShippingAddress = customer.flatMap(Customer::getShippingAddress);
+        orderDTO.setShippingAlphaCode2(optShippingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
+
         Address shippingAddress = optShippingAddress.orElse(ADDRESS);
         orderDTO.setShippingCity(shippingAddress.getCity());
         orderDTO.setShippingStreetAddress(shippingAddress.getStreet());
-        orderDTO.setShippingAlphaCode2(optShippingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
 
         if (order.getProducts() != null) {
             List<ProductDTO> targetProducts = new ArrayList<ProductDTO>(order.getProducts().size());
