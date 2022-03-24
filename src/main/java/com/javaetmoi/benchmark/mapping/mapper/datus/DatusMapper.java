@@ -28,26 +28,26 @@ public class DatusMapper implements OrderMapper {
     private static final Mapper<Order, OrderDTO> orderMapper = Datus.forTypes(Order.class, OrderDTO.class)
             .mutable(OrderDTO::new)
 
-            .from(Order::getCustomer).nullsafe()
+            .from(Order::getCustomer)
             .map(customer -> customer.orElse(CUSTOMER).getName()).into(OrderDTO::setCustomerName)
 
-            .from(Order::getCustomer).nullsafe()
+            .from(Order::getCustomer)
             .map(customer -> customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getCity())
             .into(OrderDTO::setBillingCity)
 
-            .from(Order::getCustomer).nullsafe()
+            .from(Order::getCustomer)
             .map(customer -> customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getStreet())
             .into(OrderDTO::setBillingStreetAddress)
 
-            .from(Order::getCustomer).nullsafe()
+            .from(Order::getCustomer)
             .map(customer -> customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getCity())
             .into(OrderDTO::setShippingCity)
 
-            .from(Order::getCustomer).nullsafe()
+            .from(Order::getCustomer)
             .map(customer -> customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getStreet())
             .into(OrderDTO::setShippingStreetAddress)
 
-            .from(Order::getCustomer).nullsafe()
+            .from(Order::getCustomer)
             .map(customer -> customer.flatMap(Customer::getShippingAddress).flatMap(Address::getCountry)
                     .flatMap(Country::getIsoCode)
                     .flatMap(IsoCode::getAlphaCode2)
@@ -55,7 +55,7 @@ public class DatusMapper implements OrderMapper {
                     .getCode())
             .into(OrderDTO::setShippingAlphaCode2)
 
-            .from(Order::getCustomer).nullsafe()
+            .from(Order::getCustomer)
             .map(customer -> customer.flatMap(Customer::getBillingAddress).flatMap(Address::getCountry)
                     .flatMap(Country::getIsoCode)
                     .flatMap(IsoCode::getAlphaCode2)
