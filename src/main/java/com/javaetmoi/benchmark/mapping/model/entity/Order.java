@@ -1,10 +1,9 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
 import java.util.List;
-import optional4j.spec.Optional;
-import optional4j.spec.Present;
+import java.util.Optional;
 
-public class Order implements Present<Order> {
+public class Order {
 
     private Customer customer;
 

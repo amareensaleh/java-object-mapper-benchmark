@@ -7,7 +7,7 @@ import com.javaetmoi.benchmark.mapping.model.entity.Country;
 import com.javaetmoi.benchmark.mapping.model.entity.Customer;
 import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
-import optional4j.spec.Optional;
+import java.util.Optional;
 
 public class CustomMapper {
 

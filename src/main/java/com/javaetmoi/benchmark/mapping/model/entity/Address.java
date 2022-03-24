@@ -1,9 +1,8 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-import optional4j.spec.Optional;
-import optional4j.spec.Present;
+import java.util.Optional;
 
-public class Address implements Present<Address> {
+public class Address {
 
     private Country country;
 
