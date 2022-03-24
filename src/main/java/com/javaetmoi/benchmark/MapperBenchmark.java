@@ -21,7 +21,6 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.results.Result;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
@@ -82,10 +81,8 @@ public class MapperBenchmark {
     }
 
     @Benchmark
-    public OrderDTO mapper(Blackhole blackhole) {
-        OrderDTO orderDTO = mapper.map(order);
-        blackhole.consume(orderDTO);
-        return orderDTO;
+    public OrderDTO mapper() {
+        return mapper.map(order);
     }
 
     public static void main(String... args) throws Exception {
