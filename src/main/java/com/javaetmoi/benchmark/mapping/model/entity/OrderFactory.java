@@ -38,7 +38,7 @@ public class OrderFactory {
         IsoCode isoCode = new IsoCode();
         AlphaCode2 alphaCode2 = new AlphaCode2();
         alphaCode2.setCode(code);
-        isoCode.setAlphaCode2(alphaCode2);
+        isoCode.setAlphaCode2(null);
         country.setIsoCode(isoCode);
         return country;
     }

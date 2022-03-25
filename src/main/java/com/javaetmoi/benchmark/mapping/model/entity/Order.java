@@ -1,6 +1,7 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
 import java.util.List;
+import optional4j.spec.Absent;
 import optional4j.spec.Optional;
 import optional4j.spec.Present;
 
@@ -11,7 +12,7 @@ public class Order implements Present<Order> {
     private List<Product> products;
 
     public Optional<Customer> getCustomer() {
-        return Optional.ofNullable(customer);
+        return customer != null ? customer : Absent.nothing();
     }
 
     public void setCustomer(Customer customer) {

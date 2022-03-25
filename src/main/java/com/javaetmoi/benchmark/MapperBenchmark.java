@@ -31,7 +31,8 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @State(Scope.Benchmark)
 public class MapperBenchmark {
 
-    @Param({"Manual", "MapStruct", "Selma", "JMapper", "datus", "Orika", "ModelMapper", "BULL", "Dozer", "ReMap"})
+//    @Param({"Manual", "MapStruct", "Selma", "JMapper", "datus", "Orika", "ModelMapper", "BULL", "Dozer", "ReMap"})
+    @Param({"Orika"})
     private String type;
 
     private OrderMapper mapper;
@@ -78,9 +79,9 @@ public class MapperBenchmark {
     @Setup(Level.Iteration)
     public void preInit() {
         order = OrderFactory.buildOrder();
-        for (int i = 0; i < 1000; i++) {
-            Optional.ofNullable(null);
-        }
+//        for (int i = 0; i < 1000; i++) {
+//            Optional.ofNullable(null);
+//        }
     }
 
     @Benchmark

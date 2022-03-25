@@ -25,6 +25,7 @@ public class ModelMapper implements OrderMapper {
         modelMapper.addMappings(new PropertyMap<Order, OrderDTO>() {
             @Override
             protected void configure() {
+
             }
         }).setPostConverter(POST_CONVERTER);
     }
