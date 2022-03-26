@@ -5,7 +5,7 @@ import optional4j.spec.Absent;
 import optional4j.spec.Optional;
 import optional4j.spec.Present;
 
-public class Order implements Present<Order> {
+public final class Order implements Present<Order> {
 
     private Customer customer;
 

@@ -4,7 +4,7 @@ import optional4j.spec.Absent;
 import optional4j.spec.Optional;
 import optional4j.spec.Present;
 
-public class IsoCode implements Present<IsoCode> {
+public final class IsoCode implements Present<IsoCode> {
 
     private AlphaCode2 alphaCode2;
 

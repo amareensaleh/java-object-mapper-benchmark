@@ -4,7 +4,7 @@ import optional4j.spec.Absent;
 import optional4j.spec.Optional;
 import optional4j.spec.Present;
 
-public class Address implements Present<Address> {
+public final class Address implements Present<Address> {
 
     private Country country;
 
