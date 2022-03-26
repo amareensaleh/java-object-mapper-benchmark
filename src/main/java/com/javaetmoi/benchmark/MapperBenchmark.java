@@ -20,7 +20,6 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.results.Result;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
@@ -31,8 +30,7 @@ import org.openjdk.jmh.runner.options.OptionsBuilder;
 @State(Scope.Benchmark)
 public class MapperBenchmark {
 
-//    @Param({"Manual", "MapStruct", "Selma", "JMapper", "datus", "Orika", "ModelMapper", "BULL", "Dozer", "ReMap"})
-    @Param({"Orika"})
+    @Param({"Manual", "MapStruct", "Selma", "JMapper", "datus", "Orika", "ModelMapper", "BULL", "Dozer", "ReMap"})
     private String type;
 
     private OrderMapper mapper;
@@ -79,9 +77,9 @@ public class MapperBenchmark {
     @Setup(Level.Iteration)
     public void preInit() {
         order = OrderFactory.buildOrder();
-//        for (int i = 0; i < 1000; i++) {
-//            Optional.ofNullable(null);
-//        }
+        for (int i = 0; i < 1000; i++) {
+            Optional.ofNullable(null);
+        }
     }
 
     @Benchmark
