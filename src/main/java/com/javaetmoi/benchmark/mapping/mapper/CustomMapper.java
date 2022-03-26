@@ -20,20 +20,28 @@ public class CustomMapper {
     public void map(Order order, OrderDTO orderDTO) {
 
         Optional<Customer> customer = order.getCustomer();
-        orderDTO.setCustomerName(customer.orElse(CUSTOMER).getName());
+        orderDTO.setCustomerName(getCustomer(customer).getName());
 
         Optional<Address> optBillingAddress = customer.flatMap(Customer::getBillingAddress);
-        orderDTO.setBillingAlphaCode2(optBillingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
+        orderDTO.setBillingAlphaCode2(getCode(optBillingAddress));
 
         Address billingAddress = optBillingAddress.orElse(ADDRESS);
         orderDTO.setBillingCity(billingAddress.getCity());
         orderDTO.setBillingStreetAddress(billingAddress.getStreet());
 
         Optional<Address> optShippingAddress = customer.flatMap(Customer::getShippingAddress);
-        orderDTO.setShippingAlphaCode2(optShippingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
+        orderDTO.setShippingAlphaCode2(getCode(optShippingAddress));
 
         Address shippingAddress = optShippingAddress.orElse(ADDRESS);
         orderDTO.setShippingCity(shippingAddress.getCity());
         orderDTO.setShippingStreetAddress(shippingAddress.getStreet());
+    }
+
+    private Customer getCustomer(Optional<Customer> customer) {
+        return customer.orElse(CUSTOMER);
+    }
+
+    private String getCode(Optional<Address> address) {
+        return address.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode();
     }
 }
