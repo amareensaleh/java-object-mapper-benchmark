@@ -39,12 +39,12 @@ public interface MapStructOrderMapper extends OrderMapper {
 
     @Named("unwrapBillingStreet")
     default String unwrapBillingStreet(Optional<Customer> customer){
-        return customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getStreet();
+        return customer.flatMap(Customer::getBillingAddress).map(Address::getStreet).orElse(null);
     }
 
     @Named("unwrapShippingStreet")
     default String unwrapShippingStreet(Optional<Customer> customer){
-        return customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getStreet();
+        return customer.flatMap(Customer::getShippingAddress).map(Address::getStreet).orElse(null);
     }
 
     @Named("unwrapShippingAlphaCode2")
@@ -53,8 +53,8 @@ public interface MapStructOrderMapper extends OrderMapper {
                 .flatMap(Address::getCountry)
                 .flatMap(Country::getIsoCode)
                 .flatMap(IsoCode::getAlphaCode2)
-                .orElse(ALPHA_CODE_2)
-                .getCode();
+                .map(AlphaCode2::getCode)
+                .orElse(null);
     }
 
     @Named("unwrapBillingAlphaCode2")
@@ -63,22 +63,22 @@ public interface MapStructOrderMapper extends OrderMapper {
                 .flatMap(Address::getCountry)
                 .flatMap(Country::getIsoCode)
                 .flatMap(IsoCode::getAlphaCode2)
-                .orElse(ALPHA_CODE_2)
-                .getCode();
+                .map(AlphaCode2::getCode)
+                .orElse(null);
     }
 
     @Named("unwrapBillingCity")
     default String unwrapBillingCity(Optional<Customer> customer){
-        return customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getCity();
+        return customer.flatMap(Customer::getBillingAddress).map(Address::getCity).orElse(null);
     }
 
     @Named("unwrapShippingCity")
     default String unwrapShippingCity(Optional<Customer> customer){
-        return customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getCity();
+        return customer.flatMap(Customer::getShippingAddress).map(Address::getCity).orElse(null);
     }
 
     @Named("unwrapCustomerName")
     default String unwrapCustomerName(Optional<Customer> customer){
-        return customer.orElse(CUSTOMER).getName();
+        return customer.map(Customer::getName).orElse(null);
     }
 }

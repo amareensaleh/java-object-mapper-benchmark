@@ -1,6 +1,6 @@
 package com.javaetmoi.benchmark.mapping.mapper.modelmapper;
 
-import com.javaetmoi.benchmark.mapping.mapper.CustomMapper;
+import static com.javaetmoi.benchmark.mapping.mapper.CustomMapper.CUSTOM_MAPPER;
 import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.model.dto.OrderDTO;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
@@ -13,7 +13,7 @@ public class ModelMapper implements OrderMapper {
 
         OrderDTO orderDTO = mappingContext.getDestination();
 
-        CustomMapper.CUSTOM_MAPPER.map(mappingContext.getSource(), orderDTO);
+        CUSTOM_MAPPER.map(mappingContext.getSource(), orderDTO);
 
         return orderDTO;
     };

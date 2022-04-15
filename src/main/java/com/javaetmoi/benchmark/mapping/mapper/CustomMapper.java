@@ -13,27 +13,19 @@ public class CustomMapper {
 
     public static final CustomMapper CUSTOM_MAPPER = new CustomMapper();
 
-    private static final Customer CUSTOMER = new Customer();
-    private static final Address ADDRESS = new Address();
-    private static final AlphaCode2 ALPHA_CODE_2 = new AlphaCode2();
-
     public void map(Order order, OrderDTO orderDTO) {
 
         Optional<Customer> customer = order.getCustomer();
-        orderDTO.setCustomerName(customer.orElse(CUSTOMER).getName());
+        orderDTO.setCustomerName(customer.map(Customer::getName).orElse(null));
 
         Optional<Address> optBillingAddress = customer.flatMap(Customer::getBillingAddress);
-        orderDTO.setBillingAlphaCode2(optBillingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
-
-        Address billingAddress = optBillingAddress.orElse(ADDRESS);
-        orderDTO.setBillingCity(billingAddress.getCity());
-        orderDTO.setBillingStreetAddress(billingAddress.getStreet());
+        orderDTO.setBillingAlphaCode2(optBillingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).map(AlphaCode2::getCode).orElse(null));
+        orderDTO.setBillingCity(optBillingAddress.map(Address::getCity).orElse(null));
+        orderDTO.setBillingStreetAddress(optBillingAddress.map(Address::getStreet).orElse(null));
 
         Optional<Address> optShippingAddress = customer.flatMap(Customer::getShippingAddress);
-        orderDTO.setShippingAlphaCode2(optShippingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).orElse(ALPHA_CODE_2).getCode());
-
-        Address shippingAddress = optShippingAddress.orElse(ADDRESS);
-        orderDTO.setShippingCity(shippingAddress.getCity());
-        orderDTO.setShippingStreetAddress(shippingAddress.getStreet());
+        orderDTO.setShippingAlphaCode2(optShippingAddress.flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).map(AlphaCode2::getCode).orElse(null));
+        orderDTO.setShippingCity(optShippingAddress.map(Address::getCity).orElse(null));
+        orderDTO.setShippingStreetAddress(optShippingAddress.map(Address::getStreet).orElse(null));
     }
 }
