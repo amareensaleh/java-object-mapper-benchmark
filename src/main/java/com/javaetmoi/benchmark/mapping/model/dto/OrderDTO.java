@@ -1,23 +1,43 @@
 package com.javaetmoi.benchmark.mapping.model.dto;
 
+import com.googlecode.jmapper.annotations.JMap;
+import com.googlecode.jmapper.annotations.JMapConversion;
+import com.javaetmoi.benchmark.mapping.model.entity.Address;
+import com.javaetmoi.benchmark.mapping.model.entity.AlphaCode2;
+import com.javaetmoi.benchmark.mapping.model.entity.Country;
+import com.javaetmoi.benchmark.mapping.model.entity.Customer;
+import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
 import java.util.List;
+import optional4j.spec.Optional;
 
 public class OrderDTO {
 
-	private List<ProductDTO> products;
+    static Customer CUSTOMER = new Customer();
+    static Address ADDRESS = new Address();
+    static AlphaCode2 ALPHA_CODE_2 = new AlphaCode2();
 
+    @JMap("products")
+    private List<ProductDTO> products;
+
+    @JMap("customer")
     private String customerName;
 
+    @JMap("customer")
     private String shippingStreetAddress;
 
+    @JMap("customer")
     private String shippingCity;
 
+    @JMap("customer")
     private String billingStreetAddress;
 
+    @JMap("customer")
     private String billingCity;
 
+    @JMap("customer")
     private String shippingAlphaCode2;
 
+    @JMap("customer")
     private String billingAlphaCode2;
 
     public String getShippingAlphaCode2() {
@@ -82,5 +102,50 @@ public class OrderDTO {
 
     public void setProducts(List<ProductDTO> products) {
         this.products = products;
+    }
+
+    @JMapConversion(from={"customer"}, to={"customerName"})
+    public String toCustomerName(Optional<Customer> customer) {
+        return customer.orElse(CUSTOMER).getName();
+    }
+
+    @JMapConversion(from={"customer"}, to={"billingStreetAddress"})
+    public String toBillingStreetAddress(Optional<Customer> customer){
+        return customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getStreet();
+    }
+
+    @JMapConversion(from={"customer"}, to={"shippingStreetAddress"})
+    public String toShippingStreetAddress(Optional<Customer> customer){
+        return customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getStreet();
+    }
+
+    @JMapConversion(from={"customer"}, to={"shippingAlphaCode2"})
+    public String toShippingAlphaCode2(Optional<Customer> customer){
+        return customer.flatMap(Customer::getShippingAddress)
+                .flatMap(Address::getCountry)
+                .flatMap(Country::getIsoCode)
+                .flatMap(IsoCode::getAlphaCode2)
+                .orElse(ALPHA_CODE_2)
+                .getCode();
+    }
+
+    @JMapConversion(from={"customer"}, to={"billingAlphaCode2"})
+    public String toBillingAlphaCode2(Optional<Customer> customer){
+        return customer.flatMap(Customer::getBillingAddress)
+                .flatMap(Address::getCountry)
+                .flatMap(Country::getIsoCode)
+                .flatMap(IsoCode::getAlphaCode2)
+                .orElse(ALPHA_CODE_2)
+                .getCode();
+    }
+
+    @JMapConversion(from={"customer"}, to={"billingCity"})
+    public String toBillingCity(Optional<Customer> customer){
+        return customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getCity();
+    }
+
+    @JMapConversion(from={"customer"}, to={"shippingCity"})
+    public String toShippingCity(Optional<Customer> customer){
+        return customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getCity();
     }
 }

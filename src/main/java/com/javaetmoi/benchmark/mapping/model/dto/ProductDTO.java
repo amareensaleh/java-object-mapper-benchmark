@@ -1,5 +1,8 @@
 package com.javaetmoi.benchmark.mapping.model.dto;
 
+import com.googlecode.jmapper.annotations.JGlobalMap;
+
+@JGlobalMap
 public class ProductDTO {
     
 	private String name;
