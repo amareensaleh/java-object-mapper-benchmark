@@ -3,6 +3,7 @@ package com.javaetmoi.benchmark;
 import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.mapper.bull.BullMapper;
 import com.javaetmoi.benchmark.mapping.mapper.datus.DatusMapper;
+import com.javaetmoi.benchmark.mapping.mapper.jmapper.JMapperMapper;
 import com.javaetmoi.benchmark.mapping.mapper.manual.ManualMapper;
 import com.javaetmoi.benchmark.mapping.mapper.mapstruct.MapStructMapper;
 import com.javaetmoi.benchmark.mapping.mapper.modelmapper.ModelMapper;
@@ -56,7 +57,7 @@ public class MapperBenchmark {
                 mapper = new SelmaMapper();
                 break;
             case "JMapper":
-//                mapper = new JMapperMapper();
+               mapper = new JMapperMapper();
                 break;
             case "Manual":
                 mapper = new ManualMapper();
