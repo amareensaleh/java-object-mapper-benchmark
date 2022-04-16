@@ -3,6 +3,7 @@ package com.javaetmoi.benchmark;
 import com.javaetmoi.benchmark.mapping.mapper.OrderMapper;
 import com.javaetmoi.benchmark.mapping.mapper.bull.BullMapper;
 import com.javaetmoi.benchmark.mapping.mapper.datus.DatusMapper;
+import com.javaetmoi.benchmark.mapping.mapper.jmapper.JMapperMapper;
 import com.javaetmoi.benchmark.mapping.mapper.manual.ManualMapper;
 import com.javaetmoi.benchmark.mapping.mapper.mapstruct.MapStructMapper;
 import com.javaetmoi.benchmark.mapping.mapper.modelmapper.ModelMapper;
@@ -34,7 +35,8 @@ public class MapperBenchmark {
     private String type;
 
     private OrderMapper mapper;
-    private Order order;
+
+    private final Order order = OrderFactory.buildOrder();
 
     @Setup(Level.Trial)
     public void setup() {
@@ -55,7 +57,7 @@ public class MapperBenchmark {
                 mapper = new SelmaMapper();
                 break;
             case "JMapper":
-//                mapper = new JMapperMapper();
+                mapper = new JMapperMapper();
                 break;
             case "Manual":
                 mapper = new ManualMapper();
@@ -72,11 +74,9 @@ public class MapperBenchmark {
             default:
                 throw new IllegalStateException("Unknown type: " + type);
         }
-    }
 
-    @Setup(Level.Iteration)
-    public void preInit() {
-        order = OrderFactory.buildOrder();
+        mapper.map(order);
+
         for (int i = 0; i < 1000; i++) {
             Optional.ofNullable(null);
         }

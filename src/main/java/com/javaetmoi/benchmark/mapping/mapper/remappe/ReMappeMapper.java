@@ -16,10 +16,6 @@ import com.remondis.remap.Mapping;
 
 public final class ReMappeMapper implements OrderMapper {
 
-    private static final Customer CUSTOMER = new Customer();
-    private static final Address ADDRESS = new Address();
-    private static final AlphaCode2 ALPHA_CODE_2 = new AlphaCode2();
-
     private final Mapper<Product, ProductDTO> mapperToDtoProduct = Mapping
         .from(Product.class)
         .to(ProductDTO.class)
@@ -28,21 +24,21 @@ public final class ReMappeMapper implements OrderMapper {
     private final Mapper<Order, OrderDTO> mapperToDto = Mapping
         .from(Order.class)
         .to(OrderDTO.class)
-        .replace(Order::getCustomer, OrderDTO::getCustomerName).with(customer -> customer.orElse(CUSTOMER).getName())
-        .replace(Order::getCustomer, OrderDTO::getBillingStreetAddress).with(customer -> customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getStreet())
-        .replace(Order::getCustomer, OrderDTO::getBillingCity).with(customer -> customer.flatMap(Customer::getBillingAddress).orElse(ADDRESS).getCity())
-        .replace(Order::getCustomer, OrderDTO::getShippingStreetAddress).with(customer -> customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getStreet())
-        .replace(Order::getCustomer, OrderDTO::getShippingCity).with(customer -> customer.flatMap(Customer::getShippingAddress).orElse(ADDRESS).getCity())
+        .replace(Order::getCustomer, OrderDTO::getCustomerName).with(customer -> customer.map(Customer::getName).orElse(null))
+        .replace(Order::getCustomer, OrderDTO::getBillingStreetAddress).with(customer -> customer.flatMap(Customer::getBillingAddress).map(Address::getStreet).orElse(null))
+        .replace(Order::getCustomer, OrderDTO::getBillingCity).with(customer -> customer.flatMap(Customer::getBillingAddress).map(Address::getCity).orElse(null))
+        .replace(Order::getCustomer, OrderDTO::getShippingStreetAddress).with(customer -> customer.flatMap(Customer::getShippingAddress).map(Address::getStreet).orElse(null))
+        .replace(Order::getCustomer, OrderDTO::getShippingCity).with(customer -> customer.flatMap(Customer::getShippingAddress).map(Address::getCity).orElse(null))
         .replace(Order::getCustomer, OrderDTO::getShippingAlphaCode2).with(customer -> customer.flatMap(Customer::getShippingAddress).flatMap(Address::getCountry)
                     .flatMap(Country::getIsoCode)
                     .flatMap(IsoCode::getAlphaCode2)
-                    .orElse(ALPHA_CODE_2)
-                    .getCode())
+                    .map(AlphaCode2::getCode)
+                    .orElse(null))
         .replace(Order::getCustomer, OrderDTO::getBillingAlphaCode2).with(customer -> customer.flatMap(Customer::getBillingAddress).flatMap(Address::getCountry)
                     .flatMap(Country::getIsoCode)
                     .flatMap(IsoCode::getAlphaCode2)
-                    .orElse(ALPHA_CODE_2)
-                    .getCode())
+                    .map(AlphaCode2::getCode)
+                    .orElse(null))
         .useMapper(mapperToDtoProduct)
         .mapper();
 

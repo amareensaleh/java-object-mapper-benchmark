@@ -18,11 +18,11 @@ public class ModelMapper implements OrderMapper {
         return orderDTO;
     };
 
-    private org.modelmapper.ModelMapper modelMapper;
+    private final org.modelmapper.ModelMapper mapper;
 
     public ModelMapper() {
-        modelMapper = new org.modelmapper.ModelMapper();
-        modelMapper.addMappings(new PropertyMap<Order, OrderDTO>() {
+        mapper = new org.modelmapper.ModelMapper();
+        mapper.addMappings(new PropertyMap<Order, OrderDTO>() {
             @Override
             protected void configure() {
 
@@ -32,6 +32,6 @@ public class ModelMapper implements OrderMapper {
 
     @Override
     public OrderDTO map(Order source) {
-        return modelMapper.map(source, OrderDTO.class);
+        return mapper.map(source, OrderDTO.class);
     }
 }

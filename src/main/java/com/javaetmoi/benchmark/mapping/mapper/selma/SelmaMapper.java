@@ -7,7 +7,7 @@ import fr.xebia.extras.selma.Selma;
 
 public class SelmaMapper implements OrderMapper {
 
-    private SelmaOrderMapper mapper = Selma.builder(SelmaOrderMapper.class).build();
+    private final SelmaOrderMapper mapper = Selma.builder(SelmaOrderMapper.class).build();
 
     @Override
     public OrderDTO map(Order source) {

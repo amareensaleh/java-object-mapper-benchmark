@@ -17,7 +17,7 @@ import ma.glasnost.orika.impl.DefaultMapperFactory;
  */
 public class OrikaMapper implements OrderMapper {
 
-    private BoundMapperFacade<Order, OrderDTO> orderMapper;
+    private final BoundMapperFacade<Order, OrderDTO> mapper;
 
     public OrikaMapper() {
         MapperFactory factory = new DefaultMapperFactory.Builder().build();
@@ -30,12 +30,12 @@ public class OrikaMapper implements OrderMapper {
                     }
                 })
                 .toClassMap());
-        orderMapper = factory.getMapperFacade(Order.class, OrderDTO.class, false);
+        mapper = factory.getMapperFacade(Order.class, OrderDTO.class, false);
     }
 
     @Override
     public OrderDTO map(Order source) {
-        return orderMapper.map(source);
+        return mapper.map(source);
     }
 };
 
