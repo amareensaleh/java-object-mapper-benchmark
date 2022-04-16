@@ -19,10 +19,6 @@ import org.mapstruct.Named;
 @Mapper
 public interface MapStructOrderMapper extends OrderMapper {
 
-    Customer CUSTOMER = new Customer();
-    Address ADDRESS = new Address();
-    AlphaCode2 ALPHA_CODE_2 = new AlphaCode2();
-
     @Mappings({
             @Mapping(source = "customer", target = "customerName", qualifiedByName = "unwrapCustomerName"),
             @Mapping(source = "customer", target = "billingStreetAddress", qualifiedByName = "unwrapBillingStreet"),

@@ -21,7 +21,6 @@ import org.openjdk.jmh.annotations.Param;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
-import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.results.Result;
 import org.openjdk.jmh.results.RunResult;
 import org.openjdk.jmh.results.format.ResultFormatType;
@@ -36,7 +35,8 @@ public class MapperBenchmark {
     private String type;
 
     private OrderMapper mapper;
-    private Order order;
+
+    private final Order order = OrderFactory.buildOrder();
 
     @Setup(Level.Trial)
     public void setup() {
@@ -74,14 +74,12 @@ public class MapperBenchmark {
             default:
                 throw new IllegalStateException("Unknown type: " + type);
         }
-    }
 
-    @Setup(Level.Iteration)
-    public void preInit() {
-        order = OrderFactory.buildOrder();
         for (int i = 0; i < 1000; i++) {
             Optional.ofNullable(null);
         }
+
+        mapper.map(order);
     }
 
     @Benchmark

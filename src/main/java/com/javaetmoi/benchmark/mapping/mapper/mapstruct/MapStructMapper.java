@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 
 public class MapStructMapper implements OrderMapper {
 
-    MapStructOrderMapper mapper = Mappers.getMapper(MapStructOrderMapper.class);
+    private final MapStructOrderMapper mapper = Mappers.getMapper(MapStructOrderMapper.class);
 
     @Override
     public OrderDTO map(Order source) {

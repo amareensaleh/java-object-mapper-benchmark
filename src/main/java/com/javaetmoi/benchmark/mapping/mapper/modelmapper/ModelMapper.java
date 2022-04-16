@@ -18,7 +18,7 @@ public class ModelMapper implements OrderMapper {
         return orderDTO;
     };
 
-    private org.modelmapper.ModelMapper modelMapper;
+    private final org.modelmapper.ModelMapper modelMapper;
 
     public ModelMapper() {
         modelMapper = new org.modelmapper.ModelMapper();

@@ -20,7 +20,7 @@ public final class ManualMapper implements OrderMapper {
         CUSTOM_MAPPER.map(order, orderDTO);
 
         if (order.getProducts() != null) {
-            List<ProductDTO> targetProducts = new ArrayList<ProductDTO>(order.getProducts().size());
+            List<ProductDTO> targetProducts = new ArrayList<>(order.getProducts().size());
             for (Product product : order.getProducts()) {
                 targetProducts.add(new ProductDTO(product.getName()));
             }
