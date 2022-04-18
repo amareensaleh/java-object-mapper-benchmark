@@ -10,7 +10,7 @@ import com.javaetmoi.benchmark.mapping.model.entity.IsoCode;
 import com.javaetmoi.benchmark.mapping.model.entity.Order;
 import com.javaetmoi.benchmark.mapping.model.entity.OrderFactory;
 import java.util.Collection;
-import java.util.Optional;
+import com.google.common.base.Optional;
 import org.openjdk.jmh.annotations.Benchmark;
 import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
@@ -33,49 +33,49 @@ public class MapperBenchmark {
     @Setup
     public void setup() {
         for (int i = 0; i < 1000; i++) {
-            Optional.ofNullable(null);
+            Optional.fromNullable(null);
         }
     }
 
     @Benchmark
     public void toCustomerName(Blackhole blackhole) {
-        blackhole.consume(order.getCustomer().map(Customer::getName).orElse(null));
+        blackhole.consume(order.getCustomer().transform(Customer::getName).orNull());
     }
 
     @Benchmark
     public void toShippingStreetAddress(Blackhole blackhole) {
-        blackhole.consume(order.getCustomer().flatMap(Customer::getShippingAddress).map(Address::getStreet).orElse(null));
+        blackhole.consume(order.getCustomer().transform(Customer::getShippingAddress).transform(Address::getStreet).orNull());
     }
 
     @Benchmark
     public void toShippingCity(Blackhole blackhole) {
-        blackhole.consume(order.getCustomer().flatMap(Customer::getShippingAddress).map(Address::getCity).orElse(null));
+        blackhole.consume(order.getCustomer().transform(Customer::getShippingAddress).transform(Address::getCity).orNull());
     }
 
     @Benchmark
     public void toShippingAlphaCode2(Blackhole blackhole) {
-        blackhole.consume(order.getCustomer().flatMap(Customer::getShippingAddress).flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).map(AlphaCode2::getCode).orElse(null));
+        blackhole.consume(order.getCustomer().transform(Customer::getShippingAddress).transform(Address::getCountry).transform(Country::getIsoCode).transform(IsoCode::getAlphaCode2).transform(AlphaCode2::getCode).orNull());
     }
 
     @Benchmark
     public void toBillingStreetAddress(Blackhole blackhole) {
-        blackhole.consume(order.getCustomer().flatMap(Customer::getBillingAddress).map(Address::getStreet).orElse(null));
+        blackhole.consume(order.getCustomer().transform(Customer::getBillingAddress).transform(Address::getStreet).orNull());
     }
 
     @Benchmark
     public void toBillingCity(Blackhole blackhole) {
-        blackhole.consume(order.getCustomer().flatMap(Customer::getBillingAddress).map(Address::getCity).orElse(null));
+        blackhole.consume(order.getCustomer().transform(Customer::getBillingAddress).transform(Address::getCity).orNull());
     }
 
     @Benchmark
     public void toBillingAlphaCode2(Blackhole blackhole) {
-        blackhole.consume(order.getCustomer().flatMap(Customer::getBillingAddress).flatMap(Address::getCountry).flatMap(Country::getIsoCode).flatMap(IsoCode::getAlphaCode2).map(AlphaCode2::getCode).orElse(null));
+        blackhole.consume(order.getCustomer().transform(Customer::getBillingAddress).transform(Address::getCountry).transform(Country::getIsoCode).transform(IsoCode::getAlphaCode2).transform(AlphaCode2::getCode).orNull());
     }
 
     @Benchmark
-    public OrderDTO combined() {
+    public void combined(Blackhole blackhole) {
         CustomMapper.CUSTOM_MAPPER.map(order, orderDTO);
-        return orderDTO;
+        blackhole.consume(orderDTO);
     }
 
     public static void main(String... args) throws Exception {

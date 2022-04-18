@@ -1,7 +1,7 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
 import java.util.List;
-import java.util.Optional;
+import com.google.common.base.Optional;
 
 public class Order {
 
@@ -10,7 +10,7 @@ public class Order {
     private List<Product> products;
 
     public Optional<Customer> getCustomer() {
-        return Optional.ofNullable(customer);
+        return Optional.fromNullable(customer);
     }
 
     public void setCustomer(Customer customer) {

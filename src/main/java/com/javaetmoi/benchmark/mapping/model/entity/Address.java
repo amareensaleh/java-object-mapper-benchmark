@@ -1,7 +1,5 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-import java.util.Optional;
-
 public class Address {
 
     private Country country;
@@ -10,8 +8,8 @@ public class Address {
 
     private String city;
 
-    public Optional<Country> getCountry() {
-        return Optional.ofNullable(country);
+    public Country getCountry() {
+        return country;
     }
 
     public void setCountry(Country country) {

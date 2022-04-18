@@ -1,7 +1,5 @@
 package com.javaetmoi.benchmark.mapping.model.entity;
 
-import java.util.Optional;
-
 public class Customer {
 
     private String name;
@@ -10,16 +8,16 @@ public class Customer {
 
     private Address billingAddress;
 
-    public Optional<Address> getShippingAddress() {
-        return Optional.ofNullable(shippingAddress);
+    public Address getShippingAddress() {
+        return shippingAddress;
     }
 
     public void setShippingAddress(Address shippingAddress) {
         this.shippingAddress = shippingAddress;
     }
 
-    public Optional<Address> getBillingAddress() {
-        return Optional.ofNullable(billingAddress);
+    public Address getBillingAddress() {
+        return billingAddress;
     }
 
     public void setBillingAddress(Address billingAddress) {
