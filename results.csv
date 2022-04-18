@@ -1,10 +1,8 @@
-"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: type"
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,15883678.999479,297252.277159,"ops/s",Manual
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,12092865.252441,80939.105047,"ops/s",MapStruct
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,16315774.150529,123240.461006,"ops/s",Selma
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,21094330.254163,5387576.544328,"ops/s",JMapper
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,9841441.734799,182394.061221,"ops/s",datus
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,3693094.766000,51542.247165,"ops/s",Orika
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,510011.330089,9139.806081,"ops/s",ModelMapper
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,107012.476332,1589.464593,"ops/s",BULL
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,568256.086732,3216.405443,"ops/s",ReMap
+"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit"
+"com.javaetmoi.benchmark.MapperBenchmark.toBillingAlphaCode2","thrpt",1,25,64111430.058891,2731853.804522,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toBillingCity","thrpt",1,25,123374551.459636,484550.174056,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toBillingStreetAddress","thrpt",1,25,123587461.438029,419698.455133,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toCustomerName","thrpt",1,25,172753515.384884,715520.656333,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toShippingAlphaCode2","thrpt",1,25,67594854.731917,600864.422567,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toShippingCity","thrpt",1,25,114033429.479338,3397515.679517,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toShippingStreetAddress","thrpt",1,25,118587506.014728,5254243.947773,"ops/s"
