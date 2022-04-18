@@ -1,10 +1,9 @@
-"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit","Param: type"
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,27208520.668366,1298634.317213,"ops/s",Manual
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,24563752.947016,728423.858886,"ops/s",MapStruct
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,29436730.344003,425226.112035,"ops/s",Selma
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,12600631.561557,4089676.952823,"ops/s",JMapper
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,14091863.569303,293166.962547,"ops/s",datus
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,4109599.907814,115792.749266,"ops/s",Orika
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,498914.717375,10396.677278,"ops/s",ModelMapper
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,97894.945979,2985.867816,"ops/s",BULL
-"com.javaetmoi.benchmark.MapperBenchmark.mapper","thrpt",1,25,559927.241453,14076.346805,"ops/s",ReMap
+"Benchmark","Mode","Threads","Samples","Score","Score Error (99.9%)","Unit"
+"com.javaetmoi.benchmark.MapperBenchmark.combined","thrpt",1,25,63316590.587040,1452493.751325,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toBillingAlphaCode2","thrpt",1,25,159575557.300844,806868.047165,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toBillingCity","thrpt",1,25,345211932.269186,8962643.246202,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toBillingStreetAddress","thrpt",1,25,347577844.561678,12025880.700378,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toCustomerName","thrpt",1,25,377404067.996645,12953390.000292,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toShippingAlphaCode2","thrpt",1,25,150024563.689803,8013472.306569,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toShippingCity","thrpt",1,25,315902923.651847,6996175.711836,"ops/s"
+"com.javaetmoi.benchmark.MapperBenchmark.toShippingStreetAddress","thrpt",1,25,320513000.625450,3287463.591062,"ops/s"
